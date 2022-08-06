@@ -1,14 +1,16 @@
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 export default class Loader {
-  constructor(scene) {
+  constructor() {
     this.loader = new GLTFLoader();
-    this.scene = scene;
-    this.model = null;
+    this.path = 'models/';
+    this.models = [];
   }
-  loadModel(model) {
-    this.loader.load('models/' + model, (model) => {
-      this.model = model.scene;
-      this.scene.add(this.model);
+  loadModel(scene, { path, scale }) {
+    this.loader.setPath(this.path + path);
+    this.loader.load('scene.gltf', (model) => {
+      this.models = [...this.models, model.scene];
+      model.scene.scale.set(...scale);
+      scene.add(model.scene);
     });
   }
 }
