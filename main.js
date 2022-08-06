@@ -1,7 +1,8 @@
-import World from "./components/World";
-import "./style.css";
+import World from './components/World';
+import './style.css';
 
-const canvas = document.getElementById("canvas");
+console.log('test');
+const canvas = document.getElementById('canvas');
 
 const world = new World(canvas);
 
