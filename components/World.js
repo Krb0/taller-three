@@ -6,8 +6,9 @@ import {
   PerspectiveCamera,
   Scene,
   WebGLRenderer,
-} from "three";
-import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
+} from 'three';
+import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
+import Loader from './Loader';
 
 export default class World {
   constructor(canvas) {
@@ -20,8 +21,9 @@ export default class World {
       0.1,
       1000
     );
+    this.loader = new Loader(this.scene);
+    this.loader.loadModel('pokedex/scene.gltf');
     this.camera.position.z = 5;
-    this.scene.add(this.cube);
     this.setCube();
     this.setRenderer();
     this.setLights();
@@ -38,8 +40,8 @@ export default class World {
   setCube() {
     const geometry = new BoxGeometry(3, 3, 3);
     const material = new MeshStandardMaterial({ color: 0x0f0f0f0 });
-    const cube = new Mesh(geometry, material);
-    this.scene.add(cube);
+    this.cube = new Mesh(geometry, material);
+    this.scene.add(this.cube);
   }
   setControls() {
     this.controls = new OrbitControls(this.camera, this.canvas);
