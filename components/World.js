@@ -8,6 +8,7 @@ import {
   WebGLRenderer,
 } from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
+import Interaction from './Interaction';
 import Loader from './Loader';
 
 export default class World {
@@ -21,10 +22,16 @@ export default class World {
       0.1,
       1000
     );
-    this.loader = new Loader(this.scene);
-    this.loader.loadModel('pokedex/scene.gltf');
+    this.loader = new Loader();
+    const interaction = new Interaction(this.scene, this.camera);
+    this.loader.loadModel(this.scene, {
+      path: 'pokedex/',
+      scale: [20, 20, 20],
+    });
+
     this.camera.position.z = 5;
-    this.setCube();
+
+    /*     this.setCube(); */
     this.setRenderer();
     this.setLights();
     this.setControls();
@@ -34,15 +41,15 @@ export default class World {
     this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
   }
   setLights() {
-    this.AmbientLight = new AmbientLight(0xfffff, 1);
+    this.AmbientLight = new AmbientLight('white', 1);
     this.scene.add(this.AmbientLight);
   }
-  setCube() {
+  /*   setCube() {
     const geometry = new BoxGeometry(3, 3, 3);
     const material = new MeshStandardMaterial({ color: 0x0f0f0f0 });
     this.cube = new Mesh(geometry, material);
     this.scene.add(this.cube);
-  }
+  } */
   setControls() {
     this.controls = new OrbitControls(this.camera, this.canvas);
     this.controls.update();
